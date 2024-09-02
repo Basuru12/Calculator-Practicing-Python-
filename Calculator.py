@@ -3,14 +3,15 @@ import re
 
 
 #print(mo.group(3))
-x = 3
+
 
 
 
 #finds the coefficient of the term
 
 """make a regex manually"""
-def finder(x, input):
+def finder(x,input):
+    
     regex_count = 0 # number of items in regex
     regex = "(.*)"
     regex_count += input.count("+")
@@ -27,13 +28,13 @@ def finder(x, input):
     for item in mo.groups():
         
         #manually makes the regex
-        if ("x" in item) == False:
+        if ("X" in item) == False:
             result += int(item)
             continue
         power = 1
         
         #int the index of the power
-        termRegex = re.compile(r"x\^(\d+)")
+        termRegex = re.compile(r"X\^(\d+)")
         index = termRegex.search(item)
         
         # finds the power
@@ -43,13 +44,19 @@ def finder(x, input):
         y = pow(x,power)
             
         #finds the coeeficient
-        coefficientRegex = re.compile(r'(\d+)(?=x)')
+        coefficientRegex = re.compile(r'(\d+)(?=X)')
         coefficient = coefficientRegex.search(item)
         #multiplies by the co
         y= int(coefficient.group(0)) * y
         result += y
     return result
-x = [1,2,3,4,5,6,7,8]
-input = "2x+1"
-y_list = [finder(x, input) for x  in x]
-print(y_list)
+
+def draw(input):
+    x = list(range(-100,100))
+    y_list = [finder(x, input) for x  in x]
+    print(y_list)
+    plt.title(f"Graph of {input}")
+    plt.xlabel("X axis")
+    plt.ylabel("Y axis")
+    plt.plot(x,y_list)
+    plt.show()
